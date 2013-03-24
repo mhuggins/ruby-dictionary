@@ -1,5 +1,8 @@
 # Dictionary
 
+[![Build Status](https://secure.travis-ci.org/mhuggins/ruby-dictionary.png)](http://travis-ci.org/mhuggins/ruby-dictionary)
+[![Code Climate](https://codeclimate.com/github/mhuggins/ruby-dictionary.png)](https://codeclimate.com/github/mhuggins/ruby-dictionary)
+
 [ruby-dictionary](https://github.com/mhuggins/ruby-dictionary) provides a
 simple dictionary that allows for checking existence of words and finding a
 subset of words given a prefix.
