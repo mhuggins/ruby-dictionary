@@ -1,6 +1,6 @@
 # Dictionary
 
-[ruby-dictionary](https://github.com/mhuggins/ruby-dictionary] provides a
+[ruby-dictionary](https://github.com/mhuggins/ruby-dictionary) provides a
 simple dictionary that allows for checking existence of words and finding a
 subset of words given a prefix.
 
