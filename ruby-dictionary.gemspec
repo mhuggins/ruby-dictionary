@@ -5,7 +5,7 @@ require 'ruby-dictionary/version'
 
 Gem::Specification.new do |gem|
   gem.name          = 'ruby-dictionary'
-  gem.version       = Ruby::Dictionary::VERSION
+  gem.version       = Dictionary::VERSION
   gem.authors       = ['Matt Huggins']
   gem.email         = ['matt.huggins@gmail.com']
   gem.description   = %q{Dictionary class for ruby that allows for checking
