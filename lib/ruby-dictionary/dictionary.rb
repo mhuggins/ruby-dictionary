@@ -4,8 +4,13 @@ require 'zlib'
 require 'ruby-dictionary/word_path'
 
 class Dictionary
-  def initialize(word_list)
+  def initialize(word_list, case_sensitive=false)
+    @case_sensitive = case_sensitive
     @word_path = parse_words(word_list)
+  end
+
+  def case_sensitive?
+    @case_sensitive  
   end
 
   def exists?(word)
@@ -14,7 +19,9 @@ class Dictionary
   end
 
   def starting_with(prefix)
-    prefix = prefix.to_s.strip.downcase
+    prefix = prefix.to_s.strip
+    prefix = prefix.downcase unless @case_sensitive
+	
     path = word_path(prefix)
     return [] if path.nil?
 
@@ -42,7 +49,7 @@ class Dictionary
     inspect
   end
 
-  def self.from_file(path, separator = "\n")
+  def self.from_file(path, separator = "\n", case_sensitive=false)
     contents = case path
                  when String then File.read(path)
                  when File then path.read
@@ -54,7 +61,7 @@ class Dictionary
       contents = gz.read
     end
 
-    new(contents.split(separator))
+    new(contents.split(separator), case_sensitive)
   end
 
   private
@@ -68,6 +75,8 @@ class Dictionary
   end
 
   def word_path(str)
+    str = str.to_s.strip
+    str = str.downcase unless @case_sensitive
     @word_path.find(str)
   end
 end

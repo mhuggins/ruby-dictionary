@@ -15,12 +15,12 @@ class Dictionary
 
     def <<(word)
       raise ArgumentError, "must be a string" unless word.kind_of?(String)
-      _append(word.strip.downcase)
+      _append(word.strip)
     end
 
     def find(word)
       raise ArgumentError, "must be a string" unless word.kind_of?(String)
-      _find(word.strip.downcase)
+      _find(word.strip)
     end
 
     def suffixes
