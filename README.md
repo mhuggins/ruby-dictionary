@@ -53,6 +53,32 @@ the provided string.
     dictionary.starting_with('bee')  # => ["bee", "been", "bees"]
     dictionary.starting_with('foo')  # => []
 
+### Case Sensitivity
+
+By default, a new `Dictionary` is case-insensitive, meaning "bee", "Bee", and
+"BEE" are all considered to be the same, regardless of adding to the dictionary
+or searching within it.
+
+However, you can choose to use case-sensitive dictionary by passing an optional
+`true` parameter to both the `#new` and `#from_file` methods.
+
+    dictionary = Dictionary.new(%w(Alpha Beta), true)
+    dictionary.exists?('Alpha')      # => true
+    dictionary.exists?('alpha')      # => false
+
+    dictionary = Dictionary.from_file('restaurants.txt', "\n", true)
+    dictionary.starting_with('Mc')   # => ["McDonald's"]
+    dictionary.starting_with('mc')   # => []
+
+Additionally, you can determine whether a dictionary is case-sensitive via the
+`#case_sensitive?` method.
+
+    dictionary = Dictionary.new([])
+    dictionary.case_sensitive?       # => false
+
+    dictionary = Dictionary.new([], true)
+    dictionary.case_sensitive?       # => true
+
 ## Contributing
 
 1. Fork it

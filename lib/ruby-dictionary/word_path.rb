@@ -1,8 +1,13 @@
 class Dictionary
   class WordPath
-    def initialize
+    def initialize(case_sensitive)
+      @case_sensitive = !!case_sensitive
       @is_leaf = false
       @word_paths = {}
+    end
+
+    def case_sensitive?
+      @case_sensitive
     end
 
     def leaf?
@@ -14,13 +19,15 @@ class Dictionary
     end
 
     def <<(word)
-      raise ArgumentError, "must be a string" unless word.kind_of?(String)
-      _append(word.strip.downcase)
+      raise ArgumentError, 'must be a string' unless word.kind_of?(String)
+      word = word.downcase unless @case_sensitive
+      _append(word.strip)
     end
 
     def find(word)
-      raise ArgumentError, "must be a string" unless word.kind_of?(String)
-      _find(word.strip.downcase)
+      raise ArgumentError, 'must be a string' unless word.kind_of?(String)
+      word = word.downcase unless @case_sensitive
+      _find(word.strip)
     end
 
     def suffixes
@@ -33,7 +40,7 @@ class Dictionary
     end
 
     def hash
-      self.class.hash ^ @is_leaf.hash ^ @word_paths.hash
+      self.class.hash ^ @is_leaf.hash ^ @word_paths.hash ^ @case_sensitive.hash
     end
 
     def ==(obj)
@@ -65,7 +72,7 @@ class Dictionary
       return if word.empty?
 
       char = word[0]
-      word_path = @word_paths[char] ||= self.class.new
+      word_path = @word_paths[char] ||= self.class.new(@case_sensitive)
 
       if word.size == 1
         word_path.leaf = true

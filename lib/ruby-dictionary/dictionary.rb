@@ -4,8 +4,12 @@ require 'zlib'
 require 'ruby-dictionary/word_path'
 
 class Dictionary
-  def initialize(word_list)
-    @word_path = parse_words(word_list)
+  def initialize(word_list, case_sensitive = false)
+    @word_path = parse_words(word_list, case_sensitive)
+  end
+
+  def case_sensitive?
+    @word_path.case_sensitive?
   end
 
   def exists?(word)
@@ -14,7 +18,9 @@ class Dictionary
   end
 
   def starting_with(prefix)
-    prefix = prefix.to_s.strip.downcase
+    prefix = prefix.to_s.strip
+    prefix = prefix.downcase unless case_sensitive?
+
     path = word_path(prefix)
     return [] if path.nil?
 
@@ -42,11 +48,11 @@ class Dictionary
     inspect
   end
 
-  def self.from_file(path, separator = "\n")
+  def self.from_file(path, separator = "\n", case_sensitive = false)
     contents = case path
                  when String then File.read(path)
                  when File then path.read
-                 else raise ArgumentError, "path must be a String or File"
+                 else raise ArgumentError, 'path must be a String or File'
                end
 
     if contents.start_with?("\x1F\x8B")
@@ -54,15 +60,15 @@ class Dictionary
       contents = gz.read
     end
 
-    new(contents.split(separator))
+    new(contents.split(separator), case_sensitive)
   end
 
   private
 
-  def parse_words(word_list)
-    raise ArgumentError, "word_list should be an array of strings" unless word_list.kind_of?(Array)
+  def parse_words(word_list, case_sensitive)
+    raise ArgumentError, 'word_list should be an array of strings' unless word_list.kind_of?(Array)
 
-    WordPath.new.tap do |word_path|
+    WordPath.new(case_sensitive).tap do |word_path|
       word_list.each { |word| word_path << word.to_s }
     end
   end
