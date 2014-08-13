@@ -20,12 +20,12 @@ describe Dictionary::WordPath do
   describe '#leaf=' do
     it 'should set to false' do
       subject.leaf = false
-      subject.should_not be_leaf
+      expect(subject).not_to be_leaf
     end
 
     it 'should set to true' do
       subject.leaf = true
-      subject.should be_leaf
+      expect(subject).to be_leaf
     end
   end
 
@@ -37,18 +37,18 @@ describe Dictionary::WordPath do
 
       it 'finds existing word paths of matching case-sensitivity' do
         word_path = subject.find('potat')
-        word_path.should be_a Dictionary::WordPath
-        word_path.should eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
+        expect(word_path).to be_a Dictionary::WordPath
+        expect(word_path).to eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
       end
 
       it 'finds existing word paths of unmatching case-sensitivity' do
         word_path = subject.find('poTAt')
-        word_path.should be_a Dictionary::WordPath
-        word_path.should eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
+        expect(word_path).to be_a Dictionary::WordPath
+        expect(word_path).to eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
       end
 
       it 'does not find nonexistent word paths' do
-        subject.find('potable').should be_nil
+        expect(subject.find('potable')).to be_nil
       end
     end
 
@@ -61,16 +61,16 @@ describe Dictionary::WordPath do
 
       it 'finds existing word paths of matching case-sensitivity' do
         word_path = subject.find('poTAt')
-        word_path.should be_a Dictionary::WordPath
-        word_path.should eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
+        expect(word_path).to be_a Dictionary::WordPath
+        expect(word_path).to eq Dictionary::WordPath.new(case_sensitive).tap { |wp| wp << 'o' }
       end
 
       it 'does not find existing word paths of unmatching case-sensitivity' do
-        subject.find('potat').should be_nil
+        expect(subject.find('potat')).to be_nil
       end
 
       it 'does not find nonexistent word paths' do
-        subject.find('potat').should be_nil
+        expect(subject.find('potat')).to be_nil
       end
     end
   end
@@ -82,8 +82,8 @@ describe Dictionary::WordPath do
 
     describe 'when case-insensitive' do
       it 'appends case-insensitive word to word path' do
-        subject.find('potato').should be_a Dictionary::WordPath
-        subject.find('poTAto').should eq subject.find('potato')
+        expect(subject.find('potato')).to be_a Dictionary::WordPath
+        expect(subject.find('poTAto')).to eq subject.find('potato')
       end
     end
 
@@ -91,8 +91,8 @@ describe Dictionary::WordPath do
       let(:case_sensitive) { true }
 
       it 'appends case-sensitive word to word path' do
-        subject.find('potato').should be_a Dictionary::WordPath
-        subject.find('poTAto').should be_nil
+        expect(subject.find('potato')).to be_a Dictionary::WordPath
+        expect(subject.find('poTAto')).to be_nil
       end
     end
   end
@@ -110,7 +110,7 @@ describe Dictionary::WordPath do
     describe 'when case-insensitive' do
       it 'finds all words with the given suffix' do
         word = subject.find('pot')
-        word.suffixes.should eq %w(ato able ty)
+        expect(word.suffixes).to eq %w(ato able ty)
       end
     end
 
@@ -119,7 +119,7 @@ describe Dictionary::WordPath do
 
       it 'finds all words with the given suffix' do
         word = subject.find('pot')
-        word.suffixes.should eq %w(ABle)
+        expect(word.suffixes).to eq %w(ABle)
       end
     end
   end
