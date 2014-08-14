@@ -53,6 +53,13 @@ the provided string.
     dictionary.starting_with('bee')  # => ["bee", "been", "bees"]
     dictionary.starting_with('foo')  # => []
 
+The `#prefixes` method returns a sorted array of all the words appearing in the
+beginning of the provided string.
+
+    dictionary.prefixes('abstract')  # => ["a", "ab", "abs"]
+    dictionary.prefixes('bend')      # => ["be", "bend"]
+
+
 ### Case Sensitivity
 
 By default, a new `Dictionary` is case-insensitive, meaning "bee", "Bee", and
