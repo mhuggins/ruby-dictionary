@@ -39,6 +39,13 @@ class Dictionary
       end
     end
 
+    def find_prefixes(string)
+      raise ArgumentError, 'must be a string' unless string.kind_of?(String)
+      string = string.downcase unless @case_sensitive
+      _find_prefixes(string.strip)
+    end
+
+
     def hash
       self.class.hash ^ @is_leaf.hash ^ @word_paths.hash ^ @case_sensitive.hash
     end
@@ -65,6 +72,18 @@ class Dictionary
         word_path
       else
         word_path._find(word[1, word.size])
+      end
+    end
+
+    def _find_prefixes(str)
+      char = str[0]
+
+      word_path = @word_paths[char]
+      return [] unless word_path
+
+      [].tap do |prefixes|
+        prefixes << char if word_path.leaf?
+        prefixes.concat(word_path._find_prefixes(str[1, str.size]).collect { |prefix| "#{char}#{prefix}" })
       end
     end
 

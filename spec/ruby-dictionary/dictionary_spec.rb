@@ -124,6 +124,37 @@ describe Dictionary do
     end
   end
 
+  describe '#prefixes' do
+    describe "for exceptional input" do
+      it "returns empty string for empty string" do
+        expect(subject.prefixes('')).to be_empty
+      end
+
+      it "finds the prefix of a single letter (the letter itself)" do
+        expect(subject.prefixes('a')).to eq %w(a)
+      end
+    end
+
+    describe 'when case-insensitive' do
+      it 'finds all the prefixes of a string regardless of casing' do
+        %w(abstract Abstract).each do |string|
+          expect(subject.prefixes(string)).to eq %w(a ab abs)
+        end
+      end
+    end
+
+    describe 'when case-sensitive' do
+      let(:case_sensitive) { true }
+
+      it 'finds all the prefixes of a string, of the same casing' do
+        expect(subject.prefixes('abstract')).to eq %w(a ab abs)
+        expect(subject.prefixes('aBstract')).to eq %w(a)
+        expect(subject.prefixes('Abstract')).to be_empty
+      end
+    end
+  end
+
+
   describe '#inspect' do
     specify { expect(subject.inspect).to eq '#<Dictionary>' }
   end

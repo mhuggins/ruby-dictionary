@@ -32,6 +32,14 @@ class Dictionary
     words.sort!
   end
 
+  def prefixes(string)
+    string = string.to_s.strip
+    string = string.downcase unless case_sensitive?
+
+    @word_path.find_prefixes(string).sort
+  end
+
+
   def hash
     self.class.hash ^ @word_path.hash
   end
