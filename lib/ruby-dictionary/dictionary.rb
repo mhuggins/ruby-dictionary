@@ -68,7 +68,7 @@ class Dictionary
       contents = gz.read
     end
 
-    new(contents.split(separator), case_sensitive)
+    new(contents.scrub.split(separator), case_sensitive)
   end
 
   private
