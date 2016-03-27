@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
                          prefix.}
   gem.summary       = 'Simple dictionary class for checking existence of words'
   gem.homepage      = 'https://github.com/mhuggins/ruby-dictionary'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
